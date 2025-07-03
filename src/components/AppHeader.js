@@ -54,15 +54,10 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink to="/dashboard" as={NavLink}>
-              Panel
-            </CNavLink>
+Inicio            </CNavLink>
           </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Usuarios</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Configuración</CNavLink>
-          </CNavItem>
+        
+          
         </CHeaderNav>
         <CHeaderNav className="ms-auto">
           <CNavItem>
@@ -70,16 +65,8 @@ const AppHeader = () => {
               <CIcon icon={cilBell} size="lg" />
             </CNavLink>
           </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem>
+          
+          
         </CHeaderNav>
         <CHeaderNav>
           <li className="nav-item py-1">

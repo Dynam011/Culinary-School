@@ -15,6 +15,52 @@ body {
   @include transition(padding .15s);
 }
 
+
+
+
+/* Puedes agregar esto en tu archivo CSS global o en línea */
+.card-header {
+  background: linear-gradient(90deg, #040b4d 0%, #050020 100%);
+  color: #fff !important;
+  border-top-left-radius: 1rem !important;
+  border-top-right-radius: 1rem !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.card {
+  border-radius: 1rem !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.795);
+  overflow: hidden;
+}
+
+.card-body {
+  background: rgba(22, 19, 19, 0.651) !important;
+}
+
+
+/* Cambia el color del título del mes */
+.react-calendar__navigation button {
+  color: #000 !important;
+  font-weight: bold;
+}
+
+/* Cambia el color de los números de los días */
+.react-calendar__tile {
+  color: #000 !important;
+}
+
+/* Opcional: resalta el día actual con fondo y texto negro */
+.react-calendar__tile--now {
+  background: #ffe066 !important;
+  color: #000 !important;
+}
+
+
+
+
+
+
 .header > .container-fluid,
 .sidebar-header {
   min-height: calc(4rem + 1px); // stylelint-disable-line function-disallowed-list
