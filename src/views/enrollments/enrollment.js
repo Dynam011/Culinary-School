@@ -68,7 +68,7 @@ export const EnrollmentsList = () => {
     const fetchAll = async () => {
       try {
         // Fetch enrollments
-        const enrollmentsRes = await fetch('http://localhost:4000/api/enrollments', {
+        const enrollmentsRes = await fetch('https://culinary-school-back.onrender.com/api/enrollments', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -78,7 +78,7 @@ export const EnrollmentsList = () => {
         setEnrollments(enrollmentsData);
 
         // Fetch students
-        const studentsRes = await fetch('http://localhost:4000/api/users', {
+        const studentsRes = await fetch('https://culinary-school-back.onrender.com/api/users', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -88,7 +88,7 @@ export const EnrollmentsList = () => {
         setStudents(studentsData);
 
         // Fetch sections
-        const sectionsRes = await fetch('http://localhost:4000/api/sections', {
+        const sectionsRes = await fetch('https://culinary-school-back.onrender.com/api/sections', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -124,7 +124,7 @@ export const EnrollmentsList = () => {
   const handleAddEnrollment = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:4000/api/enrollments', {
+      const response = await fetch('https://culinary-school-back.onrender.com/api/enrollments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export const EnrollmentsList = () => {
   const handleEditEnrollment = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:4000/api/enrollments/${editEnrollment.id}`, {
+      const response = await fetch(`https://culinary-school-back.onrender.com/api/enrollments/${editEnrollment.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ export const EnrollmentsList = () => {
   const handleDeleteEnrollment = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`'https://culinary-school-back.onrender.com/api/enrollments/${selectedEnrollment.id}`, {
+      const response = await fetch(`https://culinary-school-back.onrender.com/api/enrollments/${selectedEnrollment.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
