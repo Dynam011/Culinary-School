@@ -22,154 +22,6 @@ import CIcon from '@coreui/icons-react';
 import { cilPlus, cilPencil, cilTrash, cilCheckCircle } from '@coreui/icons';
 import InventoryFilter from './InventoryFilter';
 
-// Mock inventory data (for now)
-const mockInventoryData = [
-  {
-    id: 1,
-    name: 'Wheat Flour',
-    type: 'Ingredient',
-    description: 'Flour for baking',
-    current_stock: 60,
-    max_stock: 100,
-    min_stock: 10,
-    unit_id: 1,
-    expiration_date: '2025-12-31',
-    supplier: 'Supplier A',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-01',
-    next_maintenance_date: '2025-07-01',
-    location: 'Warehouse 1',
-  },
-  {
-    id: 2,
-    name: 'White Sugar',
-    type: 'Ingredient',
-    description: 'Refined sugar',
-    current_stock: 50,
-    max_stock: 80,
-    min_stock: 5,
-    unit_id: 1,
-    expiration_date: '2026-01-15',
-    supplier: 'Supplier B',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-05',
-    next_maintenance_date: '2025-07-05',
-    location: 'Warehouse 1',
-  },
-  {
-    id: 3,
-    name: 'Chef Knife',
-    type: 'Utensil',
-    description: 'Stainless steel knife',
-    current_stock: 15,
-    max_stock: 20,
-    min_stock: 2,
-    unit_id: 2, // Puede ser N/A o un valor válido, pero no requerido para Utensil
-    expiration_date: null,
-    supplier: 'Tools Inc.',
-    status: 'In Use',
-    last_maintenance_date: '2025-05-10',
-    next_maintenance_date: '2025-11-10',
-    location: 'Main Kitchen',
-  },
-  {
-    id: 4,
-    name: 'Fresh Milk',
-    type: 'Ingredient',
-    description: 'Pasteurized whole milk',
-    current_stock: 20,
-    max_stock: 50,
-    min_stock: 8,
-    unit_id: 1,
-    expiration_date: '2025-07-10',
-    supplier: 'Dairy Co.',
-    status: 'Low Stock',
-    last_maintenance_date: '2025-07-01',
-    next_maintenance_date: '2025-07-08',
-    location: 'Refrigerator',
-  },
-  {
-    id: 5,
-    name: 'Extra Virgin Olive Oil',
-    type: 'Ingredient',
-    description: 'Olive oil for cooking',
-    current_stock: 25,
-    max_stock: 30,
-    min_stock: 5,
-    unit_id: 3,
-    expiration_date: '2025-08-20',
-    supplier: 'Olympus Ltd.',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-15',
-    next_maintenance_date: '2025-08-15',
-    location: 'Warehouse 2',
-  },
-  {
-    id: 6,
-    name: 'Plum Tomatoes',
-    type: 'Ingredient',
-    description: 'Fresh tomatoes',
-    current_stock: 10,
-    max_stock: 40,
-    min_stock: 5,
-    unit_id: 1,
-    expiration_date: '2025-07-05',
-    supplier: 'Farm Produce',
-    status: 'Low Stock',
-    last_maintenance_date: '2025-07-01',
-    next_maintenance_date: '2025-07-04',
-    location: 'Refrigerator',
-  },
-  {
-    id: 7,
-    name: 'Mixing Bowl',
-    type: 'Utensil',
-    description: 'Large stainless steel bowl',
-    current_stock: 8,
-    max_stock: 10,
-    min_stock: 2,
-    unit_id: 2,
-    expiration_date: null,
-    supplier: 'Kitchen Supplies',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-10',
-    next_maintenance_date: '2025-12-10',
-    location: 'Main Kitchen',
-  },
-  {
-    id: 8,
-    name: 'Measuring Jug',
-    type: 'Utensil',
-    description: 'Plastic measuring jug',
-    current_stock: 5,
-    max_stock: 10,
-    min_stock: 1,
-    unit_id: 2,
-    expiration_date: null,
-    supplier: 'Kitchen Supplies',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-12',
-    next_maintenance_date: '2025-12-12',
-    location: 'Main Kitchen',
-  },
-  {
-    id: 9,
-    name: 'Olive Oil Dispenser',
-    type: 'Equipment',
-    description: 'Glass dispenser for olive oil',
-    current_stock: 3,
-    max_stock: 5,
-    min_stock: 1,
-    unit_id: 2,
-    expiration_date: null,
-    supplier: 'Bar Tools',
-    status: 'In Stock',
-    last_maintenance_date: '2025-06-20',
-    next_maintenance_date: '2025-12-20',
-    location: 'Bar',
-  },
-];
-
 // Opciones de unidades de medida (mock, reemplaza por tu lista real si la tienes)
 const unitOptions = [
   { label: 'kg', value: 1 },
@@ -254,8 +106,8 @@ const InventoryList = () => {
     expiration_date_start: '',
     expiration_date_end: '',
   });
-  const [inventoryData, setInventoryData] = useState(mockInventoryData);
-  const [filteredInventory, setFilteredInventory] = useState(mockInventoryData);
+  const [inventoryData, setInventoryData] = useState([]);
+  const [filteredInventory, setFilteredInventory] = useState([]);
 
   // Modal states
   const [showModal, setShowModal] = useState(false);
@@ -265,6 +117,22 @@ const InventoryList = () => {
   const [deleteIdx, setDeleteIdx] = useState(null);
   const [alert, setAlert] = useState({ show: false, type: '', message: '' });
   const [modalErrors, setModalErrors] = useState({});
+
+  // --- FETCH DATA FROM API ---
+  const fetchInventory = async () => {
+    try {
+      const res = await fetch('https://culinary-school-back.onrender.com/API/inventory');
+      if (!res.ok) throw new Error('Error fetching inventory');
+      const data = await res.json();
+      setInventoryData(data);
+    } catch (err) {
+      setAlert({ show: true, type: 'danger', message: 'Error loading inventory.' });
+    }
+  };
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
 
   // Filtering logic
   useEffect(() => {
@@ -376,36 +244,53 @@ const InventoryList = () => {
     setShowModal(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const errors = validateModal(currentItem);
     setModalErrors(errors);
     if (Object.keys(errors).length > 0) return;
-    if (modalMode === 'add') {
-      const newId = Math.max(...inventoryData.map(item => item.id)) + 1;
-      setInventoryData(prev => [...prev, { ...currentItem, id: newId }]);
-      setAlert({ show: true, type: 'success', message: 'Item added successfully.' });
-    } else {
-      setInventoryData(prev => {
-        const updated = [...prev];
-        updated[currentItem.idx] = { ...currentItem };
-        delete updated[currentItem.idx].idx;
-        return updated;
-      });
-      setAlert({ show: true, type: 'success', message: 'Item updated successfully.' });
+    try {
+      if (modalMode === 'add') {
+        const res = await fetch('https://culinary-school-back.onrender.com//API/inventory', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentItem),
+        });
+        if (!res.ok) throw new Error('Error adding item');
+        setAlert({ show: true, type: 'success', message: 'Item added successfully.' });
+      } else {
+        const id = currentItem.id;
+        const res = await fetch(`/API/inventory/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentItem),
+        });
+        if (!res.ok) throw new Error('Error updating item');
+        setAlert({ show: true, type: 'success', message: 'Item updated successfully.' });
+      }
+      setShowModal(false);
+      setCurrentItem(null);
+      setModalErrors({});
+      fetchInventory();
+    } catch (err) {
+      setAlert({ show: true, type: 'danger', message: err.message });
     }
-    setShowModal(false);
-    setCurrentItem(null);
-    setModalErrors({});
   };
   const openDeleteModal = (idx) => {
     setDeleteIdx(idx);
     setShowDeleteModal(true);
   };
-  const confirmDelete = () => {
-    setInventoryData(prev => prev.filter((_, i) => i !== deleteIdx));
-    setShowDeleteModal(false);
-    setDeleteIdx(null);
-    setAlert({ show: true, type: 'danger', message: 'Item deleted.' });
+  const confirmDelete = async () => {
+    try {
+      const item = filteredInventory[deleteIdx];
+      const res = await fetch(`https://culinary-school-back.onrender.com//API/inventory/${item.id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Error deleting item');
+      setShowDeleteModal(false);
+      setDeleteIdx(null);
+      setAlert({ show: true, type: 'danger', message: 'Item deleted.' });
+      fetchInventory();
+    } catch (err) {
+      setAlert({ show: true, type: 'danger', message: err.message });
+    }
   };
 
   return (

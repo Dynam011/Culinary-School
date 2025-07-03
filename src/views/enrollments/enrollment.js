@@ -170,7 +170,7 @@ export const EnrollmentsList = () => {
   const handleDeleteEnrollment = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`http://localhost:4000/api/enrollments/${selectedEnrollment.id}`, {
+      const response = await fetch(`'https://culinary-school-back.onrender.com/api/enrollments/${selectedEnrollment.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
