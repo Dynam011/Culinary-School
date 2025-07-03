@@ -9,6 +9,7 @@ const Users = React.lazy(() => import('./views/user/Users'))
 const Sections = React.lazy(() => import('./views/sections/sections'))
 const Enrollment = React.lazy(() => import('./views/enrollments/enrollment'))
 const Programs = React.lazy(() => import('./views/programs/programs'))
+const InventoryList = React.lazy(() => import('./views/inventory/InventoryList'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -20,6 +21,8 @@ const routes = [
   { path: '/enrollments', name: 'Enrollments', element: Enrollment },
   { path: '/sections', name: 'Sections', element: Sections },
    { path: '/subjects', name: 'Subjects', element: Subjects },
+     { path: '/inventory', name: 'Inventario', element: InventoryList },
+
 ]
 
 export default routes
