@@ -9,10 +9,22 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
-import { cilAccountLogout, cilSettings } from '@coreui/icons'
+import {
+  cilBell,
+  cilCreditCard,
+  cilCommentSquare,
+  cilEnvelopeOpen,
+  cilFile,
+  cilLockLocked,
+  cilSettings,
+  cilTask,
+  cilUser,
+
+} from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import avatar8 from './../../assets/images/avatars/8.jpg'
+
+import avatar8 from './../../assets/images/avatars/7.png'
 
 const AppHeaderDropdown = () => {
   return (
@@ -21,26 +33,29 @@ const AppHeaderDropdown = () => {
         <CAvatar src={avatar8} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">
-          Configuracion
-        </CDropdownHeader>
-
+       
+        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Cuenta</CDropdownHeader>
+        <CDropdownItem href="#/profile" >
+          
+          <CIcon icon={cilUser} className="me-2" />
+          Mi Perfil
+        </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
           Ajustes
         </CDropdownItem>
-
+        <CDropdownItem href="#">
+          <CIcon icon={cilCreditCard} className="me-2" />
+          Pagos
+          <CBadge color="secondary" className="ms-2">
+            
+          </CBadge>
+        </CDropdownItem>
+        
         <CDropdownDivider />
-        <CDropdownItem
-          href="#"
-          onClick={() => {
-            localStorage.removeItem('token')
-            localStorage.removeItem('usuario')
-            window.location.reload()
-          }}
-        >
-          <CIcon icon={cilAccountLogout} className="me-2" />
-          Log out
+        <CDropdownItem href="#">
+          <CIcon icon={cilLockLocked} className="me-2" />
+          Cerar sesión
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
